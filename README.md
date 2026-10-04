@@ -6,86 +6,142 @@ This repository is your personal knowledge base for Hermes Agent workflows, skil
 - A memory store for context across sessions
 - A collection of templates and best practices
 
-## Structure
+## Repository Details
+
+- **Repository**: https://github.com/T2theV/hermes-agent-skills-notes
+- **Branch**: `main` (only branch - all commits go here)
+- **Purpose**: Store skills, notes, and persistent memory for Hermes Agent
+
+## Directory Structure
 
 ```
 hermes-agent-skills-notes/
-├── README.md              # This file
-├── docs/                  # Documentation and guides
-│   ├── skills/           # Skill documentation
-│   ├── notes/            # Personal notes
-│   └── memory/           # Persistent reminders
+├── README.md              # This file - main documentation
+├── DOCUMENTATION.md       # Detailed structure documentation
+├── .gitignore             # Git ignore patterns
+├── docs/                  # Documentation, guides, notes, memory
+│   ├── skills/           # Skill documentation (SKILL.md files)
+│   ├── notes/            # Personal notes organized by topic
+│   └── memory/           # Persistent reminders across sessions
 ├── templates/             # Reusable templates
-│   ├── skill-template.md # Template for new skills
-│   ├── note-template.md  # Template for notes
-│   └── ...
+│   ├── skill-template.md # Template for creating skills
+│   └── note-template.md  # Template for creating notes
 ├── workflows/             # Workflow definitions
-│   ├── github/           # GitHub-related workflows
-│   ├── git/              # Git workflows
-│   └── ...
-└── scripts/               # Helper scripts
+│   ├── github/           # GitHub workflows (PRs, issues, etc.)
+│   └── git/              # Git workflows (branching, commits)
+└── scripts/               # Helper scripts and utilities
 ```
 
 ## Quick Start
 
-### Adding a New Skill
-```bash
-# Create a new skill directory
-mkdir -p skills/<skill-name>
+### For Hermes Agent (when I'm working):
 
-# Create the skill documentation
-cd skills/<skill-name>
-cat > SKILL.md << 'EOF'
+**I automatically manage this repository. Just tell me what to store:**
+
+1. **Add a new skill**: "Document a new skill for X"
+2. **Add a note**: "Create a note about Y"
+3. **Store memory**: "Remember this important detail Z"
+4. **Create templates**: "Make a template for W"
+
+### Manual Usage (if needed):
+
+```bash
+# Add a skill
+mkdir -p docs/skills/<skill-name>
+cat > docs/skills/<skill-name>/SKILL.md << 'EOF'
 ---
 name: <skill-name>
 description: "What this skill does"
 version: 1.0.0
-author: t2thev
+author: T2theV
 ---
 
 # <skill-name>
 
 <Your skill documentation here>
+EOF
+
+# Add a note
+cat > docs/notes/<topic>.md << 'EOF'
+# <Note Title>
+
+<Your notes here>
+EOF
+
+# Store memory
+cat > docs/memory/<reminder>.md << 'EOF'
+# <Reminder Title>
+
+<What to remember>
+EOF
 ```
 
-### Adding a Note
-```bash
-# Create a new note
-echo "# My Note Title
+## Git Workflow
 
-<Your notes here>" > docs/notes/my-note.md
-```
+- **Branch**: `main` only (no feature branches)
+- **Commit format**: `<type>: <description>`
+  - `feat:` New skill or feature
+  - `fix:` Bug fix
+  - `docs:` Documentation update
+  - `chore:` Maintenance tasks
+- **Push**: Automatic when I make changes
 
-### Adding to Memory
-```bash
+## Usage Examples
+
+### With Hermes Agent:
+
+```python
+# Store a skill
+from hermes_tools import write_file
+write_file("docs/skills/git-workflow.md", "# Git Workflow\n...")
+
+# Add a note
+write_file("docs/notes/shopping.md", "# Shopping List\n...")
+
 # Store persistent memory
-echo "Your memory item here" > docs/memory/persistent-reminder.md
+write_file("docs/memory/preferences.md", "# Preferences\n...")
 ```
 
-## Skills Library
+## What Gets Stored
 
-This repository will contain documented skills organized by category:
+### Skills
+- Documented workflows and procedures
+- Tool usage guides
+- Best practices
+- Troubleshooting guides
 
-- **GitHub & Git** - Repository management, PR workflows, code review
-- **Home Assistant** - Smart home device control and automation
-- **Browser Automation** - Web scraping, form filling, data extraction
-- **Development** - Debugging, testing, code review workflows
-- **Productivity** - Notes, tasks, meeting management
-- **Data Science** - Analysis, visualization, machine learning
-- **And more...**
+### Notes
+- Personal reminders
+- Meeting notes
+- Project documentation
+- Shopping lists
+- Ideas and thoughts
 
-## Usage with Hermes Agent
+### Memory
+- Setup instructions
+- Important configurations
+- Preferences
+- Critical reminders
 
-When working with Hermes, you can:
-1. Load skills from this repo using `skill_view()`
-2. Reference templates in your workflows
-3. Store notes and memory for future sessions
-4. Document new skills discovered during tasks
+## Access
+
+- **GitHub**: https://github.com/T2theV/hermes-agent-skills-notes
+- **Clone**: `git clone https://github.com/T2theV/hermes-agent-skills-notes.git`
 
 ## Contributing
 
-Feel free to add new skills, update existing ones, and organize your knowledge base as you grow.
+Feel free to:
+- Add new skills you discover
+- Organize notes by topic
+- Create templates for common tasks
+- Update documentation
 
 ## License
 
 Personal use only - this is your knowledge base.
+
+---
+
+**Current Commits:**
+- `9c4fdf0` chore: add .gitignore and directory structure documentation
+- `2c1d349` Initial commit: skills, notes & memory repository
