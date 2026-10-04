@@ -45,10 +45,13 @@ When you need accurate YouTube summaries, you have two options:
 
 ```bash
 # Fetch and summarize the transcript
-uv run python /opt/data/skills/media/youtube-accurate-summaries/scripts/fetch_transcript.py <URL>
+uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py <URL>
 
 # With options
-uv run python /opt/data/skills/media/youtube-accurate-summaries/scripts/fetch_transcript.py   "https://youtu.be/VIDEO_ID"   --language en   --timestamps
+uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py \
+  "https://youtu.be/VIDEO_ID" \
+  --language en \
+  --timestamps
 ```
 
 **Option B: Through Hermes Skill System**
@@ -154,19 +157,25 @@ summary = youtube_accurate_summaries(url)
 ### With Language Specification
 
 ```bash
-uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py   "https://youtu.be/VIDEO_ID"   --language en
+uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py \
+  "https://youtu.be/VIDEO_ID" \
+  --language en
 ```
 
 ### Plain Text Output
 
 ```bash
-uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py   "https://youtu.be/VIDEO_ID"   --text-only
+uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py \
+  "https://youtu.be/VIDEO_ID" \
+  --text-only
 ```
 
 ### With Timestamps
 
 ```bash
-uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py   "https://youtu.be/VIDEO_ID"   --timestamps
+uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py \
+  "https://youtu.be/VIDEO_ID" \
+  --timestamps
 ```
 
 ## Dependencies
@@ -210,18 +219,24 @@ The skill handles common issues:
 - Language detection may need manual specification
 - Private or age-restricted videos may not work
 
-## Related Skills
+## Skill Relationship
 
-### Prerequisite Skills
+### How youtube-accurate-summaries Relates to youtube-content
 
-- **hermes-agent**: Required for loading and using Hermes skills
-- **skill_view**: Tool for accessing skill documentation
+These are **two skills that share the same underlying script**:
 
-### Complementary Skills
+| Feature | youtube-content | youtube-accurate-summaries |
+|---------|----------------|---------------------------|
+| **Focus** | Multiple output formats (summary, thread, blog) | Accurate transcript-based summaries only |
+| **Output** | Flexible (summary, chapters, quotes, thread, blog) | Structured: Overview, Key Points, Sample Transcript, Bottom Line |
+| **Script** | ✅ Uses fetch_transcript.py | ✅ Uses SAME fetch_transcript.py |
+| **Best for** | Content repurposing, social media | Research, learning, fact-based summaries |
 
-- **youtube-content**: General YouTube transcript tool (same underlying script)
-- **grounded-citations**: For adding citations to summaries
-- **research-emulators**: For finding emulator documentation
+**Why two skills?**
+- `youtube-content` is for **content creators** who want to repurpose videos
+- `youtube-accurate-summaries` is for **researchers** who need factual accuracy
+
+Both use the same `fetch_transcript.py` script to avoid code duplication.
 
 ## Repository Structure
 
@@ -229,16 +244,21 @@ The skill handles common issues:
 hermes-agent-skills-notes/
 ├── docs/
 │   └── skills/
-│       └── youtube-accurate-summaries.md  ← This file
+│       ├── youtube-accurate-summaries.md  ← This documentation
+│       └── youtube-accurate-summaries-quick.md  ← Quick reference
 └── skills/
     └── media/
+        ├── youtube-content/
+        │   ├── SKILL.md                    ← Skill definition
+        │   └── scripts/
+        │       └── fetch_transcript.py     ← Shared transcript fetcher
         └── youtube-accurate-summaries/
-            ├── SKILL.md                    ← Main skill documentation
-            └── scripts/
-                └── fetch_transcript.py     ← Transcript fetcher
+            └── SKILL.md                    ← Reuses youtube-content script
 ```
 
 ## Quick Reference
+
+The `fetch_transcript.py` script is shared with `youtube-content` skill.
 
 | Command | Description |
 |---------|-------------|
@@ -280,7 +300,9 @@ If the transcript fetch fails:
 
 2. **Try alternative API**:
    ```bash
-   uv run python /opt/data/skills/media/youtube-accurate-summaries/scripts/fetch_transcript.py      <URL>      --language en,es,fr
+   uv run python /opt/data/skills/media/youtube-content/scripts/fetch_transcript.py \
+     <URL> \
+     --language en,es,fr
    ```
 
 3. **Manual transcript**:
