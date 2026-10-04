@@ -18,6 +18,53 @@ The **youtube-accurate-summaries** skill provides accurate summaries of YouTube 
 docs/skills/youtube-accurate-summaries.md
 ```
 
+## How to Use This Skill as an Agent
+
+### Step 1: Load the Skill Documentation
+
+Before using this skill, load the full skill definition:
+
+```python
+from hermes_tools import skill_view
+
+# Load the skill
+skill = skill_view(name="youtube-accurate-summaries")
+```
+
+This will give you access to:
+- The full skill specification
+- Available tools and commands
+- Error handling procedures
+- Best practices
+
+### Step 2: Use in Your Workflow
+
+When you need accurate YouTube summaries, you have two options:
+
+**Option A: Direct Script Execution (Recommended)**
+
+```bash
+# Fetch and summarize the transcript
+uv run python /opt/data/skills/media/youtube-accurate-summaries/scripts/fetch_transcript.py <URL>
+
+# With options
+uv run python /opt/data/skills/media/youtube-accurate-summaries/scripts/fetch_transcript.py   "https://youtu.be/VIDEO_ID"   --language en   --timestamps
+```
+
+**Option B: Through Hermes Skill System**
+
+```python
+# Load the skill context
+from hermes_tools import skill_view
+
+skill = skill_view(name="youtube-accurate-summaries")
+
+# The skill will guide you through:
+# 1. Video URL extraction
+# 2. Transcript fetching
+# 3. Summary generation
+```
+
 ## Purpose
 
 This skill is used when you need **accurate, reliable YouTube video summaries** based on actual transcripts. It's especially useful for:
@@ -165,9 +212,16 @@ The skill handles common issues:
 
 ## Related Skills
 
+### Prerequisite Skills
+
+- **hermes-agent**: Required for loading and using Hermes skills
+- **skill_view**: Tool for accessing skill documentation
+
+### Complementary Skills
+
 - **youtube-content**: General YouTube transcript tool (same underlying script)
-- **hermes-agent**: For troubleshooting script issues
 - **grounded-citations**: For adding citations to summaries
+- **research-emulators**: For finding emulator documentation
 
 ## Repository Structure
 
@@ -192,6 +246,59 @@ hermes-agent-skills-notes/
 | `--language en` | Specify English |
 | `--timestamps` | Include timestamps |
 | `--text-only` | Plain text output |
+
+## Troubleshooting for Agents
+
+### Skill Not Loading
+
+If `skill_view(name="youtube-accurate-summaries")` fails:
+
+1. **Check skill exists**:
+   ```python
+   from hermes_tools import skills_list
+   skills = skills_list()
+   print([s for s in skills if "youtube" in s["name"].lower()])
+   ```
+
+2. **Verify skill directory**:
+   ```bash
+   ls -la /opt/data/skills/media/youtube-accurate-summaries/
+   ```
+
+3. **Check SKILL.md validity**:
+   ```bash
+   head -20 /opt/data/skills/media/youtube-accurate-summaries/SKILL.md
+   ```
+
+### Transcript Fetching Fails
+
+If the transcript fetch fails:
+
+1. **Check video has captions**:
+   - Go to video page → Check if captions are available
+   - Some videos don't have auto-captions enabled
+
+2. **Try alternative API**:
+   ```bash
+   uv run python /opt/data/skills/media/youtube-accurate-summaries/scripts/fetch_transcript.py      <URL>      --language en,es,fr
+   ```
+
+3. **Manual transcript**:
+   - Check if video has manual captions
+   - Copy from YouTube page manually
+
+### Dependency Issues
+
+If `youtube-transcript-api` is missing:
+
+```bash
+uv pip install youtube-transcript-api
+```
+
+Or check if it's available:
+```bash
+uv pip show youtube-transcript-api
+```
 
 ## Author
 
